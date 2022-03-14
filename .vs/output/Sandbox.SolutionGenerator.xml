@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sandbox.SolutionGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:Sandbox.SolutionGenerator.Project">
+            <summary>
+            Class to produce the template output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.Project.TransformText">
+            <summary>
+            Create the template output
+            </summary>
+        </member>
+        <member name="T:Sandbox.SolutionGenerator.ProjectBase">
+            <summary>
+            Base class for this transformation
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.GenerationEnvironment">
+            <summary>
+            The string builder that generation-time code is using to assemble generated output
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.Errors">
+            <summary>
+            The error collection for the generation process
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.indentLengths">
+            <summary>
+            A list of the lengths of each indent that was added with PushIndent
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.CurrentIndent">
+            <summary>
+            Gets the current indent we use when adding lines to the output
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.Session">
+            <summary>
+            Current transformation session
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.Write(System.String)">
+            <summary>
+            Write text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.WriteLine(System.String)">
+            <summary>
+            Write text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.Write(System.String,System.Object[])">
+            <summary>
+            Write formatted text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.WriteLine(System.String,System.Object[])">
+            <summary>
+            Write formatted text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.Error(System.String)">
+            <summary>
+            Raise an error
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.Warning(System.String)">
+            <summary>
+            Raise a warning
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.PushIndent(System.String)">
+            <summary>
+            Increase the indent
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.PopIndent">
+            <summary>
+            Remove the last indent that was added with PushIndent
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.ClearIndent">
+            <summary>
+            Remove any indentation
+            </summary>
+        </member>
+        <member name="T:Sandbox.SolutionGenerator.ProjectBase.ToStringInstanceHelper">
+            <summary>
+            Utility class to produce culture-oriented representation of an object as a string.
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.ToStringInstanceHelper.FormatProvider">
+            <summary>
+            Gets or sets format provider to be used by ToStringWithCulture method.
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.ProjectBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+            <summary>
+            This is called from the compile/run appdomain to convert objects within an expression block to a string
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.ProjectBase.ToStringHelper">
+            <summary>
+            Helper to produce culture-oriented representation of an object as a string
+            </summary>
+        </member>
+        <member name="T:Sandbox.SolutionGenerator.Solution">
+            <summary>
+            Class to produce the template output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.Solution.TransformText">
+            <summary>
+            Create the template output
+            </summary>
+        </member>
+        <member name="T:Sandbox.SolutionGenerator.SolutionBase">
+            <summary>
+            Base class for this transformation
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.GenerationEnvironment">
+            <summary>
+            The string builder that generation-time code is using to assemble generated output
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.Errors">
+            <summary>
+            The error collection for the generation process
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.indentLengths">
+            <summary>
+            A list of the lengths of each indent that was added with PushIndent
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.CurrentIndent">
+            <summary>
+            Gets the current indent we use when adding lines to the output
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.Session">
+            <summary>
+            Current transformation session
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.Write(System.String)">
+            <summary>
+            Write text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.WriteLine(System.String)">
+            <summary>
+            Write text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.Write(System.String,System.Object[])">
+            <summary>
+            Write formatted text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.WriteLine(System.String,System.Object[])">
+            <summary>
+            Write formatted text directly into the generated output
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.Error(System.String)">
+            <summary>
+            Raise an error
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.Warning(System.String)">
+            <summary>
+            Raise a warning
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.PushIndent(System.String)">
+            <summary>
+            Increase the indent
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.PopIndent">
+            <summary>
+            Remove the last indent that was added with PushIndent
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.ClearIndent">
+            <summary>
+            Remove any indentation
+            </summary>
+        </member>
+        <member name="T:Sandbox.SolutionGenerator.SolutionBase.ToStringInstanceHelper">
+            <summary>
+            Utility class to produce culture-oriented representation of an object as a string.
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.ToStringInstanceHelper.FormatProvider">
+            <summary>
+            Gets or sets format provider to be used by ToStringWithCulture method.
+            </summary>
+        </member>
+        <member name="M:Sandbox.SolutionGenerator.SolutionBase.ToStringInstanceHelper.ToStringWithCulture(System.Object)">
+            <summary>
+            This is called from the compile/run appdomain to convert objects within an expression block to a string
+            </summary>
+        </member>
+        <member name="P:Sandbox.SolutionGenerator.SolutionBase.ToStringHelper">
+            <summary>
+            Helper to produce culture-oriented representation of an object as a string
+            </summary>
+        </member>
+    </members>
+</doc>

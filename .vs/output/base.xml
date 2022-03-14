@@ -1,0 +1,3089 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>base</name>
+    </assembly>
+    <members>
+        <member name="T:Sandbox.Clothing">
+            <summary>
+            A piece of player model customization.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Clothing.Container">
+            <summary>
+            Holds a collection of clothing items. Won't let you add items that aren't compatible.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.Toggle(Sandbox.Clothing)">
+            <summary>
+            Add a clothing item if we don't already contain it, else remove it
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.Add(Sandbox.Clothing)">
+            <summary>
+            Add clothing item
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.LoadFromClient(Sandbox.Client)">
+            <summary>
+            Load the clothing from this client's data. This is a different entry
+            point than just calling Deserialize directly because if we have 
+            inventory based skins at some point, we can validate ownership here
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.Remove(Sandbox.Clothing)">
+            <summary>
+            Remove clothing item
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.Has(Sandbox.Clothing)">
+            <summary>
+            Returns true if we have this clothing item
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.GetBodyGroups">
+            <summary>
+            Return a list of bodygroups and what their value shold be
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.Serialize">
+            <summary>
+            Serialize to Json
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.Deserialize(System.String)">
+            <summary>
+            Deserialize from Json
+            </summary>
+        </member>
+        <member name="T:Sandbox.Clothing.Container.Entry">
+            <summary>
+            Used for serialization
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.Container.DressEntity(Sandbox.AnimEntity,System.Boolean,System.Boolean)">
+            <summary>
+            Dress this citizen with clothes defined inside this class. We'll save the created entities in ClothingModels.
+            All clothing entities are tagged with "clothes".
+            </summary>
+        </member>
+        <member name="P:Sandbox.Clothing.Title">
+            <summary>
+            Name of the clothing to show in UI.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Clothing.Subtitle">
+            <summary>
+            A subtitle for this clothing piece.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Clothing.Category">
+            <summary>
+            What kind of clothing this is?
+            </summary>
+        </member>
+        <member name="P:Sandbox.Clothing.Model">
+            <summary>
+            The model to bonemerge to the player when this clothing is equpped.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Clothing.MaterialGroup">
+            <summary>
+            Which material group of the model to use.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Clothing.HideBody">
+            <summary>
+            Which bodyparts of the player model should not show when this clothing is equpped.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Clothing.CanBeWornWith(Sandbox.Clothing)">
+            <summary>
+            Return true if this item of clothing can be worn with the target item, at the same time.
+            </summary>
+        </member>
+        <member name="F:Sandbox.DecalDefinition.ByPath">
+            <summary>
+            A dictionary of decals by asset path.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.DecalEntry.Material">
+            <summary>
+            Material to use.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.DecalEntry.Width">
+            <summary>
+            Width of the decal.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.DecalEntry.Height">
+            <summary>
+            Height of the decal.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.DecalEntry.KeepAspect">
+            <summary>
+            Keep aspect ratio of the decal image when using randomly generating Width and Height.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.DecalEntry.Depth">
+            <summary>
+            TODO: Describe me
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.DecalEntry.Rotation">
+            <summary>
+            Rotation to apply when placing the decal.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DecalDefinition.Decals">
+            <summary>
+            A list of decals, from which an entry will be randomly selected when this decal is placed.
+            </summary>
+        </member>
+        <member name="M:Sandbox.DecalDefinition.PlaceUsingTrace(Sandbox.TraceResult)">
+            <summary>
+            Place this decal somewhere
+            </summary>
+        </member>
+        <member name="M:Sandbox.DevCamera.Activated">
+            <summary>
+            On the camera becoming activated, snap to the current view position
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.Origin">
+            <summary>
+            Origin of the camera
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.TargetEntity">
+            <summary>
+            Entity to look at
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.TargetOffset">
+            <summary>
+            Offset from the entity to look at
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.MinFov">
+            <summary>
+            Min fov when target is max distance away from origin
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.MaxFov">
+            <summary>
+            Max fov when target is near the origin
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.MinFovDistance">
+            <summary>
+            How far away to reach min fov
+            </summary>
+        </member>
+        <member name="P:Sandbox.LookAtCamera.LerpSpeed">
+            <summary>
+            How quick to lerp to target
+            </summary>
+        </member>
+        <member name="T:Sandbox.BaseCarriable">
+            <summary>
+            An entity that can be carried in the player's inventory and hands.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseCarriable.ActiveStart(Sandbox.Entity)">
+            <summary>
+            This entity has become the active entity. This most likely
+            means a player was carrying it in their inventory and now
+            has it in their hands.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseCarriable.ActiveEnd(Sandbox.Entity,System.Boolean)">
+            <summary>
+            This entity has stopped being the active entity. This most
+            likely means a player was holding it but has switched away
+            or dropped it (in which case dropped = true)
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseCarriable.CreateViewModel">
+            <summary>
+            Create the viewmodel. You can override this in your base classes if you want
+            to create a certain viewmodel entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseCarriable.DestroyViewModel">
+            <summary>
+            We're done with the viewmodel - delete it
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseCarriable.EffectEntity">
+            <summary>
+            Utility - return the entity we should be spawning particles from etc
+            </summary>
+        </member>
+        <member name="T:Sandbox.BasePhysics">
+            <summary>
+            Base entity with phyiscal properties, enables imapct damage and the like
+            </summary>
+        </member>
+        <member name="T:Sandbox.BaseViewModel">
+            <summary>
+            A common base we can use for weapons so we don't have to implement the logic over and over
+            again.
+            </summary>
+        </member>
+        <member name="T:Sandbox.BaseWeapon">
+            <summary>
+            A common base we can use for weapons so we don't have to implement the logic over and over
+            again. Feel free to not use this and to implement it however you want to.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseWeapon.TraceBullet(Vector3,Vector3,System.Single)">
+            <summary>
+            Does a trace from start to end, does bullet impact effects. Coded as an IEnumerable so you can return multiple
+            hits, like if you're going through layers or ricocet'ing or something.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.Viewer">
+            <summary>
+            If this is set, we won't draw the third person model for this entity
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.DoFPoint">
+            <summary>
+            Length until the Depth of Field focus point
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.DoFBlurSize">
+            <summary>
+            How big is the DoF aperture, in pixels
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.ViewModelFieldOfView">
+            <summary>
+            Viewmodel specific setup
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.ViewModelZNear">
+            <summary>
+            The viewmodel near Z clip plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.ViewModelZFar">
+            <summary>
+            The viewmodel far Z clip plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.ZNear">
+            <summary>
+            The near Z clip plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.ZFar">
+            <summary>
+            The far Z clip plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.Ortho">
+            <summary>
+            Use orthographic projection
+            </summary>
+        </member>
+        <member name="P:Sandbox.Camera.OrthoSize">
+            <summary>
+            Acts as a zoom when ortho is enabled
+            </summary>
+        </member>
+        <member name="M:Sandbox.Camera.BuildInput(Sandbox.InputBuilder)">
+            <summary>
+            This builds the default behaviour for our input
+            </summary>
+        </member>
+        <member name="M:Sandbox.Camera.Activated">
+            <summary>
+            Camera has become the active camera. You can use this as an opportunity
+            to snap the positions if you're lerping etc.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Camera.Deactivated">
+            <summary>
+            Camera has stopped being the active camera.
+            </summary>
+        </member>
+        <member name="T:Sandbox.GlassShard">
+            <summary>
+            A procedurally shattering glass shard.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ShatterGlass">
+            <summary>
+            A procedurally shattering glass panel.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ShatterGlass.Thickness">
+            <summary>
+            Thickness of the glass
+            </summary>
+        </member>
+        <member name="P:Sandbox.ShatterGlass.Material">
+            <summary>
+            Material to use for the glass
+            </summary>
+        </member>
+        <member name="P:Sandbox.ShatterGlass.BrokenMaterial">
+            <summary>
+            Material to use for the glass when it is broken. If not set, the material will not change on break.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ShatterGlass.Constraint">
+            <summary>
+            Glass constraint.<br/>
+            <b>Glass with static edges</b> will not be affected by gravity (glass pieces will) and will shatter piece by piece.<br/>
+            <b>Physics glass</b> is affected by gravity and will shatter all at the same time.<br/>
+            <b>Physics but asleep</b> is same as physics but will not move on spawn.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ShatterGlass.OnBreak">
+            <summary>
+            Fired when the panel initially breaks.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ShatterGlass.Break">
+            <summary>
+            Breaks the glass at its center.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.Update(Vector3)">
+            <summary>
+            Updates the reflection information before the render
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.OnRender">
+            <summary>
+            Update on the render thread
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.UpdateAspectRatio">
+            <summary>
+            Updates the aspect ratio of the reflection to match the view
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.CreateBoundingMeshModel">
+            <summary>
+            Creates a bounding mesh model for the water reflection.
+            This way the water reflection scene will only be rendered when the water is visible in player view
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.IsRenderingReflection">
+            <summary>
+            Returns true if the renderer is currently rendering the world using a reflection view
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.ReflectMatrix(Matrix,Plane)">
+            <summary>
+            Returns a reflected matrix given a plane ( Reflection normal and distance )
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlanarReflection.ReflectRotation(Rotation,Vector3)">
+            <summary>
+            Returns a reflected matrix given a reflection normal
+            </summary>
+        </member>
+        <member name="T:Sandbox.VoxelSurface">
+            <summary>
+            A procedurally breakable voxel surface.
+            </summary>
+        </member>
+        <member name="P:Sandbox.VoxelSurface.Width">
+            <summary>
+            How many voxels on the width (Limited to 64)
+            </summary>
+        </member>
+        <member name="P:Sandbox.VoxelSurface.Height">
+            <summary>
+            How many voxels on the height (Limited to 64)
+            </summary>
+        </member>
+        <member name="P:Sandbox.VoxelSurface.Thickness">
+            <summary>
+            How thick is the surface (Limited to 64)
+            </summary>
+        </member>
+        <member name="P:Sandbox.VoxelSurface.Material">
+            <summary>
+            Material to use for the surface
+            </summary>
+        </member>
+        <member name="P:Sandbox.VoxelSurface.IsFrozen">
+            <summary>
+            Is the panel frozen
+            </summary>
+        </member>
+        <member name="P:Sandbox.Water.WaterMaterial">
+            <summary>
+            Material to use for water
+            </summary>
+        </member>
+        <member name="M:Sandbox.Water.UpdateSceneObject(Sandbox.SceneObject)">
+            <summary>
+            Keep the scene object updated. By default this moves the transform to match this entity's transform
+            and updates the bounds to the new position.
+            </summary>
+        </member>
+        <member name="T:Sandbox.WaterFunc">
+            <summary>
+            Generic water volume. Make sure to have light probe volume envelop the volume of the water for the water to gain proper lighting.
+            </summary>
+        </member>
+        <member name="F:Sandbox.WaterSceneObject.WaterReflection">
+            <summary>
+            Controller used for planar reflections
+            </summary>
+        </member>
+        <member name="F:Sandbox.WaterSceneObject.WaterRipple">
+            <summary>
+            Controller used for water ripples using compute shaders
+            </summary>
+        </member>
+        <member name="M:Sandbox.WaterSceneObject.Update">
+            <summary>
+            Updates that are carried outside render thread
+            </summary>
+        </member>
+        <member name="M:Sandbox.WaterSceneObject.RenderSceneObject">
+            <summary>
+            Updates that are carried inside render thread
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Sandbox.WaterSceneObject.ViewIntersetingBBox(BBox)" -->
+        <member name="F:Sandbox.WaterSceneObject.RippleCompute.Radius">
+            <summary>
+            How far is the simulation radius of the splash from camera view
+            </summary>
+        </member>
+        <member name="M:Sandbox.WaterSceneObject.RippleCompute.Update">
+            <summary>
+            Updates per frame data for the splash to render on the GPU next
+            </summary>
+        </member>
+        <member name="M:Sandbox.WaterSceneObject.RippleCompute.EncodeSplash(Sandbox.WaterSceneObject.RippleCompute.SplashInformation)">
+            <summary>
+            Encodes the information of the splash into a float4
+            </summary>
+        </member>
+        <member name="M:Sandbox.WaterSceneObject.RippleCompute.OnRender">
+            <summary>
+            Renders the splash texture on the compute shader on the GPU
+            </summary>
+        </member>
+        <member name="M:Sandbox.WaterSceneObject.MakeCube(Vector3,Vector3)">
+            <summary>
+            Makes a vertex buffer cube for fog with the given bounds
+            </summary>
+        </member>
+        <member name="T:Sandbox.WaterSea">
+            <summary>
+            Simple water effect
+            </summary>
+        </member>
+        <member name="T:Sandbox.WaterVolume">
+            <summary>
+            Garry: wtf is this for
+            </summary>
+        </member>
+        <member name="T:Sandbox.GenericPathEntity">
+            <summary>
+            A generic path.
+            This entity can be used with entities like ent_path_platform.
+            </summary>
+        </member>
+        <member name="T:Sandbox.BasePathEntity`1">
+            <summary>
+            A base entity that will appear in Hammer's Path Tool and automatically parse data from Hammer into a ready-to-use format in C#.
+            </summary>
+            <typeparam name="T">The class to deserialize node data into.</typeparam>
+        </member>
+        <member name="P:Sandbox.BasePathEntity`1.pathNodesJSON">
+            <summary>
+            This is generated this automatically during map compile time
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathEntity`1.PathNodes">
+            <summary>
+            A list of nodes this entity represents, as set up in Hammer.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BasePathEntity`1.FindPathEntity(System.String)">
+            <summary>
+            Internal, do not use. Used to link nodes to path entities. Finds a specific path entity and returns it.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BasePathEntity`1.DrawPath(System.Int32,System.Boolean)">
+            <summary>
+            Visualizes the path for debugging purposes
+            </summary>
+            <param name="segments">"Level of Detail" for the path visualization.</param>
+            <param name="drawTangents">Whether node tangents should be drawn or not.</param>
+        </member>
+        <member name="M:Sandbox.BasePathEntity`1.GetPointBetweenNodes(Sandbox.BasePathNode,Sandbox.BasePathNode,System.Single,System.Boolean)">
+            <summary>
+            Returns a point on the cubic beizer curve between 2 given nodes
+            </summary>
+            <param name="start">The start node</param>
+            <param name="end">The next node</param>
+            <param name="t">Interpolation value from 0 to 1</param>
+            <param name="reverse">Set this to true if moving backwards.</param>
+            <returns>The position on the curve in world space</returns>
+        </member>
+        <member name="M:Sandbox.BasePathEntity`1.GetCurveLength(Sandbox.BasePathNode,Sandbox.BasePathNode,System.Int32,System.Boolean)">
+            <summary>
+            Returns the approximate length of a curve between 2 nodes.
+            </summary>
+            <param name="start">Start node</param>
+            <param name="end">End node</param>
+            <param name="segments">Number of segments. The higher the value, the more precise (and slower) the result will be.</param>
+            <param name="reverse">Set this to true if moving backwards.</param>
+            <returns>The approximate length</returns>
+        </member>
+        <member name="T:Sandbox.BasePathNode">
+            <summary>
+            A basic node description for the <see cref="T:Sandbox.BasePathEntity`1">BasePathEntity</see>.
+            Please note that <see cref="T:Sandbox.BasePathNode">BasePathNodes</see> are NOT actual entities, therefore cannot support inputs and outputs. See <see cref="T:Sandbox.BasePathNodeEntity">BasePathNodeEntity</see>.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNode.Position">
+            <summary>
+            Position of the node relative to the path entity.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNode.TangentIn">
+            <summary>
+            Position of the incoming tangent relative to the node's position. Includes rotation/scale of the node.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNode.TangentOut">
+            <summary>
+            Position of the outgoing tangent relative to the node's position. Includes rotation/scale of the node.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNode.Entity">
+            <summary>
+            The entity associated with this path node, if they were set to spawn via <see cref="T:Hammer.PathAttribute">[Hammer.Path]</see>
+            This will be set as soon as the node entity spawns, which will be after Path entity's Spawn() function.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNode.HammerUniqueId">
+            <summary>
+            Used to set the Entity property. Couldn't find a way to hide it. Do not use.
+            </summary>
+        </member>
+        <member name="T:Sandbox.BasePathNodeEntity">
+            <summary>
+            A basic node entity for the <see cref="T:Sandbox.BasePathEntity`1">BasePathEntity</see>.
+            These can be used as alternatives to <see cref="T:Sandbox.BasePathNode">BasePathNode</see> data structures with <see cref="T:Hammer.PathAttribute">[Hammer.Path]'s</see> 2nd argument.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNodeEntity.TangentIn">
+            <summary>
+            Position of the incoming tangent relative to node's own position. Does not include node's rotation/scale.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNodeEntity.TangentOut">
+            <summary>
+            Position of the outgoing tangent relative to node's own position. Does not include node's rotation/scale.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BasePathNodeEntity.PathEntity">
+            <summary>
+            The Path entity this node belongs to.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseTrigger.StartDisabled">
+            <summary>
+            Should this entity start disabled?
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseTrigger.ActvationTags">
+            <summary>
+            Entities with these tags can activate this trigger.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseTrigger.OnStartTouch">
+            <summary>
+            Fired when an entity starts touching this trigger. The touching entity must pass this trigger's filters to cause this output to fire.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseTrigger.OnEndTouch">
+            <summary>
+            Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseTrigger.OnStartTouchAll">
+            <summary>
+            Fired when an entity starts touching this trigger while no other passing entities are touching it.
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseTrigger.OnEndTouchAll">
+            <summary>
+            Fired when all entities touching this trigger have stopped touching it.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.Enable">
+            <summary>
+            Enables this trigger
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.Disable">
+            <summary>
+            Disables this trigger
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.Toggle">
+            <summary>
+            Toggles this trigger between enabled and disabled states
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.OnTouchStart(Sandbox.Entity)">
+            <summary>
+            An entity that passes PassesTriggerFilters has started touching the trigger
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.OnTouchEnd(Sandbox.Entity)">
+            <summary>
+            An entity that started touching this trigger has stopped touching
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.OnTouchStartAll(Sandbox.Entity)">
+            <summary>
+            Called when an entity starts touching this trigger while no other passing entities are touching it
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.OnTouchEndAll(Sandbox.Entity)">
+            <summary>
+            Called when all entities touching this trigger have stopped touching it.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseTrigger.PassesTriggerFilters(Sandbox.Entity)">
+            <summary>
+            Determine if an entity should be allowed to touch this trigger
+            </summary>
+        </member>
+        <member name="T:Sandbox.ButtonEntity">
+            <summary>
+            A generic button that is useful to control other map entities via inputs/outputs.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.ActivationSettings">
+            <summary>
+            How this button can be activated
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.SpawnSettings">
+            <summary>
+            Settings that are only relevant on spawn
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.MoveDir">
+            <summary>
+            Specifies the direction to move in when the button is used, or axis of rotation for rotating buttons.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.MoveDirIsLocal">
+            <summary>
+            If checked, the movement direction angle is in local space and should be rotated by the entity's angles after spawning.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.MoveDirType">
+            <summary>
+            Movement type of the button.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.Distance">
+            <summary>
+            Moving button: The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall.
+            Rotating button: The amount, in degrees, that the button should rotate when it's pressed.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.Speed">
+            <summary>
+            The speed that the button moves, in inches per second
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.ResetDelay">
+            <summary>
+            Amount of time, in seconds, after the button has been fully pressed before it starts to return to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.UnlockedSound">
+            <summary>
+            Sound played when the button is pressed and is unlocked
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.LockedSound">
+            <summary>
+            Sound played when the button is pressed and is locked
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.Ease">
+            <summary>
+            The easing function for both movement and rotation
+            TODO: Expose to hammer in a nice way
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.OnUseLocked">
+            <summary>
+            Fired when the button is used while locked
+            </summary>
+        </member>
+        <member name="M:Sandbox.ButtonEntity.OnUse(Sandbox.Entity)">
+            <summary>
+            A player has pressed this
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.OnDamaged">
+            <summary>
+            Fired when the button is damaged
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.OnPressed">
+            <summary>
+            Fired when the button is pressed
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.OnIn">
+            <summary>
+            Fired when the button reaches the in/pressed position
+            </summary>
+        </member>
+        <member name="P:Sandbox.ButtonEntity.OnOut">
+            <summary>
+            Fired when the button reaches the out/released position
+            </summary>
+        </member>
+        <member name="M:Sandbox.ButtonEntity.Lock">
+            <summary>
+            Become locked
+            </summary>
+        </member>
+        <member name="M:Sandbox.ButtonEntity.Unlock">
+            <summary>
+            Become unlocked
+            </summary>
+        </member>
+        <member name="M:Sandbox.ButtonEntity.Press(Sandbox.Entity)">
+            <summary>
+            Simulates the button being pressed
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelDoorSounds">
+            <summary>
+            Sounds to be used by ent_door if it does not override sounds.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelDoorSounds.FullyOpenSound">
+            <summary>
+            Sound to play when the door reaches it's fully open position.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelDoorSounds.FullyClosedSound">
+            <summary>
+            Sound to play when the door reaches it's fully closed position.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelDoorSounds.OpenSound">
+            <summary>
+            Sound to play when the door starts to open.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelDoorSounds.CloseSound">
+            <summary>
+            Sound to play when the door starts to close.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelDoorSounds.MovingSound">
+            <summary>
+            Sound to play while the door is moving. Typically this should be looping or very long.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelDoorSounds.LockedSound">
+            <summary>
+            Sound to play when the door is attempted to be opened, but is locked.
+            </summary>
+        </member>
+        <member name="T:Sandbox.DoorEntity">
+            <summary>
+            A basic door entity that can move or rotate. It can be a model or a mesh entity.
+            The door will rotate around the model's origin. For Hammer meshes the mesh origin can be set via the Pivot Tool.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.SpawnSettings">
+            <summary>
+            Settings that are only applicable when the entity spawns
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.MoveDir">
+            <summary>
+            The direction the door will move, when it opens.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.MoveDirIsLocal">
+            <summary>
+            If checked, the movement direction angle is in local space and should be rotated by the entity's angles after spawning.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.MoveDirType">
+            <summary>
+            Movement type of the door.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.Distance">
+            <summary>
+            Moving door: The amount, in inches, of the door to leave sticking out of the wall it recedes into when pressed. Negative values make the door recede even further into the wall.
+            Rotating door: The amount, in degrees, that the door should rotate when it's pressed.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.InitialPosition">
+            <summary>
+            How far the door should be open on spawn where 0% = closed and 100% = fully open.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OpenAwayFromPlayer">
+            <summary>
+            If checked, rotating doors will try to open away from the activator
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.Speed">
+            <summary>
+            The speed at which the door moves.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.TimeBeforeReset">
+            <summary>
+            Amount of time, in seconds, after the door has opened before it closes automatically. If the value is set to -1, the door never closes itself.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OtherDoorsToOpen">
+            <summary>
+            If set, opening this door will open all doors with given entity name. You can also simply name all doors the same for this to work.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.Breakable">
+            <summary>
+            If the door model supports break pieces and has prop_data with health, this option can be used to allow the door to break like a normal prop would.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OpenSound">
+            <summary>
+            Sound to play when the door starts to open.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.FullyOpenSound">
+            <summary>
+            Sound to play when the door reaches it's fully open position.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.CloseSound">
+            <summary>
+            Sound to play when the door starts to close.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.FullyClosedSound">
+            <summary>
+            Sound to play when the door reaches it's fully closed position.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.LockedSound">
+            <summary>
+            Sound to play when the door is attempted to be opened, but is locked.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.MovingSound">
+            <summary>
+            Sound to play while the door is moving. Typically this should be looping or very long.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OpenCurve">
+            <summary>
+            Used to override the open/close animation of moving and rotating doors. X axis (input, left to right) is the animation, Y axis (output, bottom to top) is how open the door is at that point in the animation.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.Locked">
+            <summary>
+            Whether this door is locked or not.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.Ease">
+            <summary>
+            The easing function for both movement and rotation
+            TODO: Expose to hammer in a nice way
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnLockedUse">
+            <summary>
+            Fired when a player tries to open/close this door with +use, but it's locked
+            </summary>
+        </member>
+        <member name="M:Sandbox.DoorEntity.OnUse(Sandbox.Entity)">
+            <summary>
+            A player has pressed this
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnDamaged">
+            <summary>
+            Fired when the entity gets damaged, even if it is unbreakable.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnBreak">
+            <summary>
+            Fired when the entity gets destroyed.
+            </summary>
+        </member>
+        <member name="M:Sandbox.DoorEntity.Toggle(Sandbox.Entity)">
+            <summary>
+            Toggle the open state of the door. Obeys locked state.
+            </summary>
+        </member>
+        <member name="M:Sandbox.DoorEntity.Open(Sandbox.Entity)">
+            <summary>
+            Open the door. Obeys locked state.
+            </summary>
+        </member>
+        <member name="M:Sandbox.DoorEntity.Close(Sandbox.Entity)">
+            <summary>
+            Close the door. Obeys locked state.
+            </summary>
+        </member>
+        <member name="M:Sandbox.DoorEntity.Lock">
+            <summary>
+            Locks the door so it cannot be opened or closed.
+            </summary>
+        </member>
+        <member name="M:Sandbox.DoorEntity.Unlock">
+            <summary>
+            Unlocks the door.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnOpen">
+            <summary>
+            Fired when the door starts to open. This can be called multiple times during a single "door opening"
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnClose">
+            <summary>
+            Fired when the door starts to close. This can be called multiple times during a single "door closing"
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnFullyOpen">
+            <summary>
+            Called when the door fully opens.
+            </summary>
+        </member>
+        <member name="P:Sandbox.DoorEntity.OnFullyClosed">
+            <summary>
+            Called when the door fully closes.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ExplosionEntity">
+            <summary>
+            An entity that creates an explosion at its center.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ExplosionEntity.Radius">
+            <summary>
+            Radius of the explosion.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ExplosionEntity.Damage">
+            <summary>
+            Damage the exploision should do at the center. The damage will reduce the farther the target is from the center of the explosion.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ExplosionEntity.ForceScale">
+            <summary>
+            Scale explosion induced physics forces by this amount.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ExplosionEntity.ParticleOverride">
+            <summary>
+            If set, will override the default explosion partile effect.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ExplosionEntity.SoundOverride">
+            <summary>
+            If set, will override the default explosion sound.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ExplosionEntity.RemoveOnExplode">
+            <summary>
+            Delete this entity when it is triggered via the Explode input?
+            </summary>
+        </member>
+        <member name="T:Sandbox.FuncBrush">
+            <summary>
+            A generic brush/mesh that can toggle its visibilty and collisions.
+            </summary>
+        </member>
+        <member name="P:Sandbox.FuncBrush.Enabled">
+             <summary>
+             Whether this func_brush is visible/active at all
+             </summary>
+            
+        </member>
+        <member name="P:Sandbox.FuncBrush.Solid">
+            <summary>
+            Whether this func_brush has collisions
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncBrush.DisableSolid">
+            <summary>
+            Make this func_brush non solid
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncBrush.EnableSolid">
+            <summary>
+            Make this func_brush solid
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncBrush.ToggleSolid">
+            <summary>
+            Toggle solidity of this func_brush
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncBrush.Enable">
+            <summary>
+            Enable this func_brush, making it visible
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncBrush.Disable">
+            <summary>
+            Disable this func_brush, making it invisible and non solid
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncBrush.Toggle">
+            <summary>
+            Toggle this func_brush
+            </summary>
+        </member>
+        <member name="T:Sandbox.FuncMonitor">
+            <summary>
+            A monitor that renders the view from a given point_camera entity.
+            </summary>
+        </member>
+        <member name="T:Sandbox.FuncPhysbox">
+            <summary>
+            A generic non model physics object.
+            </summary>
+        </member>
+        <member name="P:Sandbox.FuncPhysbox.PropData">
+            <summary>
+            Physical properties of this physbox
+            </summary>
+        </member>
+        <member name="P:Sandbox.FuncPhysbox._health">
+            <summary>
+            Amount of damage this entity can take before breaking
+            </summary>
+        </member>
+        <member name="P:Sandbox.FuncPhysbox.OnDamaged">
+            <summary>
+            Fired when the entity gets damaged
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncPhysbox.Wake">
+            <summary>
+            Wake up this physics object, if it is sleeping.
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncPhysbox.Sleep">
+            <summary>
+            Wake up this physics object, if it is sleeping.
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncPhysbox.EnableMotion">
+            <summary>
+            Enable motion (gravity, etc) on this entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.FuncPhysbox.DisableMotion">
+            <summary>
+            Disable motion (gravity, etc) on this entity
+            </summary>
+        </member>
+        <member name="T:Sandbox.KeyframeEntity">
+            <summary>
+            An entity that is moved programatically. Like an elevator
+            or a kliner smashing star wars garbage compactor
+            </summary>
+        </member>
+        <member name="M:Sandbox.KeyframeEntity.KeyframeTo(Transform,System.Single,Sandbox.Easing.Function)">
+            <summary>
+            Move to given transform in given amount of time
+            </summary>
+            <param name="target">The target transform</param>
+            <param name="seconds">How many seconds to take to move to target transform</param>
+            <param name="easing">If set, the easing funtion</param>
+            <returns>Whether we successded moving to given target or not</returns>
+        </member>
+        <member name="M:Sandbox.KeyframeEntity.TryKeyframeTo(Transform)">
+            <summary>
+            Used by KeyframeTo methods to try to move to a given transform
+            </summary>
+        </member>
+        <member name="M:Sandbox.KeyframeEntity.LocalKeyframeTo(Vector3,System.Single,Sandbox.Easing.Function)">
+            <summary>
+            Move to a given local position in given amount of time
+            </summary>
+            <param name="deltaTarget">The target local position</param>
+            <param name="seconds">How many seconds to take to move to target transform</param>
+            <param name="easing">If set, the easing funtion</param>
+            <returns>Whether we successded moving to given local target or not</returns>
+        </member>
+        <member name="M:Sandbox.KeyframeEntity.TryLocalKeyframeTo(Vector3)">
+            <summary>
+            Used by KeyframeTo methods to try to move to a given local position
+            </summary>
+        </member>
+        <member name="M:Sandbox.KeyframeEntity.LocalRotateKeyframeTo(Rotation,System.Single,Sandbox.Easing.Function)">
+            <summary>
+            Rotate to a given local rotation in given amount of time
+            </summary>
+            <param name="localTarget">The target local rotation</param>
+            <param name="seconds">How many seconds to take to move to target transform</param>
+            <param name="easing">If set, the easing funtion</param>
+            <returns>Whether we successded rotating to given target or not</returns>
+        </member>
+        <member name="M:Sandbox.KeyframeEntity.TryLocalRotateTo(Rotation)">
+            <summary>
+            Used by LocalRotateKeyframeTo to try to rotate to a given rotation
+            </summary>
+        </member>
+        <member name="T:Sandbox.ExclusiveFlickerer">
+            <summary>
+            Temporary light flickering entity.
+            </summary>
+        </member>
+        <member name="T:Sandbox.LogicEntity">
+            <summary>
+            A logic entity that allows to do a multitude of logic operations with Map I/O.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.Enabled">
+            <summary>
+            The (initial) enabled state of the logic entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.Enable">
+            <summary>
+            Enables the entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.Disable">
+            <summary>
+            Disables the entity, so that it would not fire any outputs.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.Toggle">
+            <summary>
+            Toggles the enabled state of the entity.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.OnMapSpawn">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.OnMapSpawnEvent">
+            <summary>
+            Fired after all map entities have spawned, even if it is disabled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.OnTrigger">
+            <summary>
+            Fired when the this entity receives the "Trigger" input.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.Trigger">
+            <summary>
+            Trigger the "OnTrigger" output.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.VariableA">
+            <summary>
+            The (initial) value for Variable A
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.VariableB">
+            <summary>
+            The (initial) value for Variable B
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.OnEqual">
+            <summary>
+            Fired when the value given to "CompareInput" or Variable A ("Compare" input) matches our Variable B.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.OnNotEqual">
+            <summary>
+            Fired when the value given to "CompareInput" or Variable A ("Compare" input) is NOT equal our Variable B.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.OnLessThan">
+            <summary>
+            Fired when the value given to "CompareInput" or Variable A ("Compare" input) is less than our Variable B.
+            </summary>
+        </member>
+        <member name="P:Sandbox.LogicEntity.OnGreaterThan">
+            <summary>
+            Fired when the value given to "CompareInput" or Variable A ("Compare" input) is greater than our Variable B.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.CompareInput(System.Single)">
+            <summary>
+            Compares the given number to Variable B and fires the appropriate output.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.Compare">
+            <summary>
+            Compares Variable A to Variable B and fires the appropriate output.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.SetVariableA(System.Single)">
+            <summary>
+            Sets the Variable A and fires approprivate outputs.
+            </summary>
+        </member>
+        <member name="M:Sandbox.LogicEntity.SetVariableB(System.Single)">
+            <summary>
+            Sets the Variable B and fires approprivate outputs.
+            </summary>
+        </member>
+        <member name="P:Sandbox.NavBlockerEntity.Enabled">
+            <summary>
+            Enabled state of this entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.NavBlockerEntity.Enable">
+            <summary>
+            Enables this blocker.
+            </summary>
+        </member>
+        <member name="M:Sandbox.NavBlockerEntity.Disable">
+            <summary>
+            Disables this blocker.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ParticleSystemEntity">
+            <summary>
+            A entity that represents and allows control of a single particle system.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.ParticleSystemName">
+            <summary>
+            The name of the particle system.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.StartActive">
+            <summary>
+            Should this system start active when it enters a player's PVS?
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.SnapshotFile">
+            <summary>
+            Name of .PSF (Particle Snapshot File) to be loaded and used by this particle system (e.g. 'smoke_snapshot1')
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.ControlPoint0">
+            <summary>
+            If set, control point 0 of the effect will be at this entity's location. (Otherwise it is at the info_particle_system origin)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.ControlPoint1">
+            <summary>
+            If set, control point 1 of the effect will be at this entity's location.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.ControlPoint2">
+            <summary>
+            If set, control point 2 of the effect will be at this entity's location. If control point 1 is not set, this will be ignored.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ParticleSystemEntity.ControlPoint1_Parent">
+            <summary>
+            If set and nonzero, control point 1 of the effect will use this point for its parent.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ParticleSystemEntity.Start">
+             <summary>
+            Tell the particle system to start emitting
+             </summary>
+        </member>
+        <member name="M:Sandbox.ParticleSystemEntity.Stop">
+            <summary>
+            Tell the particle system to stop emitting.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ParticleSystemEntity.StopPlayEndCap">
+            <summary>
+            Tell the particle system to stop emitting and play its End Cap Effect.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ParticleSystemEntity.DestroyImmediately">
+            <summary>
+            Destroy the particle system and remove all particles immediately
+            </summary>
+        </member>
+        <member name="M:Sandbox.ParticleSystemEntity.SetControlPoint">
+            <summary>
+            Set a Control Point via format - CP: X Y Z
+            </summary>
+        </member>
+        <member name="T:Sandbox.PathPlatformEntity">
+            <summary>
+            A platform that moves between nodes on a predefined path. See path_generic in the Path Tool.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.Speed">
+            <summary>
+            The speed to move/rotate with.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.StartMoveSound">
+            <summary>
+            Sound to play when starting to move.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.StopMoveSound">
+            <summary>
+            Sound to play when we stopped moving.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.MovingSound">
+            <summary>
+            Sound to play while platform is moving.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.PathEntity">
+            <summary>
+            The path_generic entity that defines path nodes for this platform.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.StartsMoving">
+            <summary>
+            If set, will automatically start moving forwards from first node on spawn.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.RotateAlongsidePath">
+            <summary>
+            If set, the entity will automatically rotate to face the direction of movement. Moving backwards will NOT flip the rotation 180 degrees.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.MoveDir">
+            <summary>
+            Specifies the direction to move in when the platform is used, or axis of rotation for rotating platforms.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.EndAction">
+            <summary>
+            What to do when reaching the end of the path when movement was initiated by the "StartMoving" input or "Starts Moving" flag. This also applies when moving backwards.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.GetPointOnNodePath(System.Single)">
+            <summary>
+            Necessary for constant speed on beizer curve
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.OnMovementStart">
+            <summary>
+            Fired when the platform starts to move.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.OnMovementEnd">
+            <summary>
+            Fired when the platform stops moving. Sends current point number as parameter.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PathPlatformEntity.OnAlreadyThere">
+            <summary>
+            Fired when the platform is already at given node number, when using inputs to move it. Carries the current node number as parameter.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.StartMoving">
+            <summary>
+            Start moving through our nodes until we reach either end of the path.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.StartForward">
+            <summary>
+            Start moving forward through our nodes until we reach end of the path.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.StartBackwards">
+            <summary>
+            Start moving forward through our nodes until we reach end of the path.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.ReverseDirection">
+            <summary>
+            Reverse current movement direction, regardless whether we are currently moving or not.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.StopMoving">
+            <summary>
+            Stop moving.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.GoToPoint(System.Int32)">
+            <summary>
+            Go to specific node set by the parameter and stop there.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.GoToNextPoint">
+            <summary>
+            Go to the next node on the path and stop there.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PathPlatformEntity.GoToPrevPoint">
+            <summary>
+            Go to the previous node on the path and stop there.
+            </summary>
+        </member>
+        <member name="T:Sandbox.PlatformEntity">
+            <summary>
+            A simple platform that moves between two locations and can be controlled through map IO.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.MoveDir">
+            <summary>
+            Specifies the direction to move in when the platform is used, or axis of rotation for rotating platforms.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.MoveDirIsLocal">
+            <summary>
+            If checked, the movement direction angle is in local space and should be rotated by the entity's angles after spawning.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.MoveDirType">
+            <summary>
+            Movement type of the platform.
+            Moving: Moving linearly and reversing direction at final position if Looping is enabled.
+            Rotating: Rotating and reversing direction at final rotation if Looping is enabled.
+            Rotating Continious: Rotating continiously past Move Distance. OnReached outputs are fired every Move Distance degrees.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.MoveDistance">
+            <summary>
+            How much to move in the move direction, or rotate around the axis for rotating move type.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.Speed">
+            <summary>
+            The speed to move/rotate with.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.TimeToHold">
+            <summary>
+            If set to above 0, the amount of time to wait before automatically toggling direction.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.SpawnSettings">
+            <summary>
+            Settings that are only applicable when the entity spawns
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.StartMoveSound">
+            <summary>
+            Sound to play when starting to move
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.StopMoveSound">
+            <summary>
+            Sound to play when we stopped moving
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.MovingSound">
+            <summary>
+            Sound to play while platform is moving.
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.OnReachedStart">
+            <summary>
+            Fired when the platform reaches its beginning location
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.OnReachedEnd">
+            <summary>
+            Fired when the platform reaches its end location (startPos + dir * distance)
+            </summary>
+        </member>
+        <member name="P:Sandbox.PlatformEntity.CurrentRotation">
+            <summary>
+            Contains the current rotation of the platform in degrees.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.StartMoving">
+            <summary>
+            Start moving in platform's current move direction
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.StartMovingForward">
+            <summary>
+            Set the move direction to forwards and start moving
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.StartMovingBackwards">
+            <summary>
+            Set the move direction to backwards and start moving
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.ReverseMoving">
+            <summary>
+            Reverse current move direction. Will NOT start moving if stopped
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.StopMoving">
+            <summary>
+            Stop moving, preserving move direction
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.ToggleMoving">
+            <summary>
+            Toggle moving, preserving move direction
+            </summary>
+        </member>
+        <member name="M:Sandbox.PlatformEntity.SetSpeed(System.Single)">
+            <summary>
+            Sets the move speed
+            </summary>
+        </member>
+        <member name="T:Sandbox.PointCamera">
+            <summary>
+            Camera
+            </summary>
+        </member>
+        <member name="P:Sandbox.PointCamera.Fov">
+            <summary>
+            Field of view in degrees
+            </summary>
+        </member>
+        <member name="P:Sandbox.PointCamera.ZNear">
+            <summary>
+            Distance to the near plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.PointCamera.ZFar">
+            <summary>
+            Distance to the far plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.PointCamera.Aspect">
+            <summary>
+            Aspect ratio
+            </summary>
+        </member>
+        <member name="T:Sandbox.SoundEventEntity">
+            <summary>
+            Plays a sound event from a point. The point can be this entity or a specified entity's position.
+            </summary>
+        </member>
+        <member name="P:Sandbox.SoundEventEntity.SoundName">
+            <summary>
+            Name of the sound to play.
+            </summary>
+        </member>
+        <member name="P:Sandbox.SoundEventEntity.SourceEntityName">
+            <summary>
+            The entity to use as the origin of the sound playback. If not set, will play from this snd_event_point.
+            </summary>
+        </member>
+        <member name="P:Sandbox.SoundEventEntity.StartOnSpawn">
+            <summary>
+            Start the sound on spawn
+            </summary>
+        </member>
+        <member name="P:Sandbox.SoundEventEntity.StopOnNew">
+            <summary>
+            Stop the sound before starting to play it again
+            </summary>
+        </member>
+        <member name="M:Sandbox.SoundEventEntity.StartSound">
+            <summary>
+            Start the sound event. If an entity name is provided, the sound will originate from that entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.SoundEventEntity.StopSound">
+            <summary>
+            Stop the sound event
+            </summary>
+        </member>
+        <member name="T:Sandbox.TriggerHurt">
+            <summary>
+            A trigger volume that damages entities that touch it.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerHurt.Damage">
+            <summary>
+            Amount of damage to deal to touching entities per second.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerHurt.OnHurtPlayer">
+            <summary>
+            Fired when a player gets hurt by this trigger
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerHurt.OnHurt">
+            <summary>
+            Fired when anything BUT a player gets hurt by this trigger
+            </summary>
+        </member>
+        <member name="M:Sandbox.TriggerHurt.SetDamage(System.Single)">
+            <summary>
+            Sets the damage per second for this trigger_hurt
+            </summary>
+        </member>
+        <member name="T:Sandbox.TriggerMultiple">
+            <summary>
+            A volume that can be triggered multiple times, including at an interval while something is inside the trigger volume.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerMultiple.Wait">
+            <summary>
+            Amount of time, in seconds, after the trigger_multiple has triggered before it can be triggered again. If set to -1, it will never trigger again (in which case you should just use a trigger_once). This affects OnTrigger output.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerMultiple.OnTrigger">
+            <summary>
+            Called every "Delay before reset" seconds as long as at least one entity that passes filters is touching this trigger
+            </summary>
+        </member>
+        <member name="T:Sandbox.TriggerOnce">
+            <summary>
+            A simple trigger volume that fires once and then removes itself.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerOnce.OnTrigger">
+            <summary>
+            Called once at least a single entity that passes filters is touching this trigger, just before this trigger getting deleted
+            </summary>
+        </member>
+        <member name="T:Sandbox.TriggerTeleport">
+            <summary>
+            A simple trigger volume that teleports entities that touch it.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerTeleport.TargetEntity">
+            <summary>
+            The entity specifying a location to which entities should be teleported to.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerTeleport.TeleportRelative">
+            <summary>
+            If set, teleports the entity with an offset depending on where the entity was in the trigger teleport. Think world portals. Place the target entity accordingly.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerTeleport.KeepVelocity">
+            <summary>
+            If set, the teleported entity will not have it's velocity reset to 0.
+            </summary>
+        </member>
+        <member name="P:Sandbox.TriggerTeleport.OnTriggered">
+            <summary>
+            Fired when the trigger teleports an entity
+            </summary>
+        </member>
+        <member name="T:Sandbox.HudEntity`1">
+            <summary>
+            A base HUD entity that lets you define which type of RootPanel to create.
+            </summary>
+        </member>
+        <member name="M:Sandbox.HudEntity`1.CreateRootPanel">
+            <summary>
+            Create the root panel, T
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.SetLookAt(System.String,Vector3)">
+            <summary>
+            We'll convert Position to a local position to the players eyes and set
+            the param on the animgraph.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.SetParam(System.String,Vector3)">
+            <summary>
+            Sets the param on the animgraph
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.SetParam(System.String,System.Single)">
+            <summary>
+            Sets the param on the animgraph
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.SetParam(System.String,System.Boolean)">
+            <summary>
+            Sets the param on the animgraph
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.SetParam(System.String,System.Int32)">
+            <summary>
+            Sets the param on the animgraph
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.Trigger(System.String)">
+            <summary>
+            Calls SetParam( name, true ). It's expected that your animgraph
+            has a "name" param with the auto reset property set.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnAnimator.ResetParams">
+            <summary>
+            Resets all params to default values on the animgraph
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.Simulate">
+            <summary>
+            This is what your logic should be going in
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.FrameSimulate">
+            <summary>
+            This is called every frame on the client only
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.RunEvents(Sandbox.PawnController)">
+            <summary>
+            Call OnEvent for each event
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.OnEvent(System.String)">
+            <summary>
+            An event has been triggered - maybe handle it
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.HasEvent(System.String)">
+            <summary>
+            Returns true if we have this event
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.HasTag(System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.AddEvent(System.String)">
+            <summary>
+            Allows the controller to pass events to other systems
+            while staying abstracted.
+            For example, it could pass a "jump" event, which could then
+            be picked up by the playeranimator to trigger a jump animation,
+            and picked up by the player to play a jump sound.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.SetTag(System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Sandbox.PawnController.BuildInput(Sandbox.InputBuilder)">
+            <summary>
+            Allow the controller to tweak input. Empty by default
+            </summary>
+        </member>
+        <member name="T:Sandbox.Player">
+            <summary>
+            This is what you should derive your player from. This base exists in addon code
+            so we can take advantage of codegen for replication. The side effect is that we
+            can put stuff in here that we don't need to access from the engine - which gives
+            more transparency to our code.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Player.Controller">
+            <summary>
+            The PlayerController takes player input and moves the player. This needs
+            to match between client and server. The client moves the local player and
+            then checks that when the server moves the player, everything is the same.
+            This is called prediction. If it doesn't match the player resets everything
+            to what the server did, that's a prediction error.
+            You should really never manually set this on the client - it's replicated so
+            that setting the class on the server will automatically network and set it
+            on the client.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Player.DevController">
+            <summary>
+            This is used for noclip mode
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.GetActiveController">
+            <summary>
+            Return the controller to use. Remember any logic you use here needs to match
+            on both client and server. This is called as an accessor every tick.. so maybe
+            avoid creating new classes here or you're gonna be making a ton of garbage!
+            </summary>
+        </member>
+        <member name="P:Sandbox.Player.Animator">
+            <summary>
+            The player animator is responsible for positioning/rotating the player and
+            interacting with the animation graph.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.GetActiveAnimator">
+            <summary>
+            Return the controller to use. Remember any logic you use here needs to match
+            on both client and server. This is called as an accessor every tick.. so maybe
+            avoid creating new classes here or you're gonna be making a ton of garbage!
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.Simulate(Sandbox.Client)">
+            <summary>
+            Called every tick to simulate the player. This is called on the
+            client as well as the server (for prediction). So be careful!
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.OnKilled">
+            <summary>
+            Called once the player's health reaches 0
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.Respawn">
+            <summary>
+            Sets LifeState to Alive, Health to Max, nulls velocity, and calls Gamemode.PlayerRespawn
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.CreateHull">
+            <summary>
+            Create a physics hull for this player. The hull stops physics objects and players passing through
+            the player. It's basically a big solid box. It also what hits triggers and stuff.
+            The player doesn't use this hull for its movement size.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.BuildInput(Sandbox.InputBuilder)">
+            <summary>
+            Called from the gamemode, clientside only.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Player.Corpse">
+            <summary>
+            A generic corpse entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.PostCameraSetup(Sandbox.CameraSetup@)">
+            <summary>
+            Called after the camera setup logic has run. Allow the player to
+            do stuff to the camera, or using the camera. Such as positioning entities
+            relative to it, like viewmodels etc.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.OnAnimEventFootstep(Vector3,System.Int32,System.Single)">
+            <summary>
+            A foostep has arrived!
+            </summary>
+        </member>
+        <member name="P:Sandbox.Player.LastActiveChild">
+            <summary>
+            This isn't networked, but it's predicted. If it wasn't then when the prediction system
+            re-ran the commands LastActiveChild would be the value set in a future tick, so ActiveEnd
+            and ActiveStart would get called mulitple times and out of order, causing all kinds of pain.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.SimulateActiveChild(Sandbox.Client,Sandbox.Entity)">
+            <summary>
+            Simulated the active child. This is important because it calls ActiveEnd and ActiveStart.
+            If you don't call these things, viewmodels and stuff won't work, because the entity won't
+            know it's become the active entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.OnActiveChildChanged(Sandbox.Entity,Sandbox.Entity)">
+            <summary>
+            Called when the Active child is detected to have changed
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.TickPlayerUse">
+            <summary>
+            This should be called somewhere in your player's tick to allow them to use entities
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.UseFail">
+            <summary>
+            Player tried to use something but there was nothing there.
+            Tradition is to give a dissapointed boop.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.StopUsing">
+            <summary>
+            If we're using an entity, stop using it
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.IsValidUseEntity(Sandbox.Entity)">
+            <summary>
+            Returns if the entity is a valid usaable entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.Player.FindUsable">
+            <summary>
+            Find a usable entity for this player to use
+            </summary>
+        </member>
+        <member name="T:Sandbox.Prop">
+            <summary>
+            A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges
+            or other constraints. It can also be configured to break when it takes enough damage.
+            Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide.
+            If the model used by the prop is configured to be used as a prop_dynamic (i.e. it should not be physically simulated) then it CANNOT be
+            used as a prop_physics. Upon level load it will display a warning in the console and remove itself. Use a prop_dynamic instead.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Prop.Static">
+            <summary>
+            If set, the prop will spawn with motion disabled and will act as a nav blocker until broken.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Prop.OnDamaged">
+            <summary>
+            Fired when the entity gets damaged.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Prop.Invulnerable">
+            <summary>
+            This prop won't be able to be damaged for this amount of time
+            </summary>
+        </member>
+        <member name="P:Sandbox.Prop.OnBreak">
+            <summary>
+            Fired when the entity gets destroyed.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Prop.Break">
+            <summary>
+            Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)
+            </summary>
+        </member>
+        <member name="P:Sandbox.PropGib.BreakpieceName">
+            <summary>
+            Used to track individual break pieces for the purposes of Model Break Commands.
+            ModelDoc guarantees that these names will be unique.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Sky">
+            <summary>
+            Simple Skybox
+            </summary>
+        </member>
+        <member name="T:Sandbox.AtmosphereSky">
+            <summary>
+            Fancy dynamic sky
+            </summary>
+        </member>
+        <member name="T:Sandbox.SpawnPoint">
+            <summary>
+            This entity defines the spawn point of the player in first person shooter gamemodes.
+            </summary>
+        </member>
+        <member name="T:Sandbox.PickupTrigger">
+            <summary>
+            A utilty class. Add as a child to your pickupable entities to expand
+            the trigger boundaries. They'll be able to pick up the parent entity
+            using these bounds.
+            </summary>
+        </member>
+        <member name="M:Sandbox.PickupTrigger.SetTriggerSize(System.Single)">
+            <summary>
+            Set the trigger radius. Default is 16.
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityExtensions.ProceduralHitReaction(Sandbox.AnimEntity,Sandbox.DamageInfo,System.Single)">
+            <summary>
+            Sets the procedural hit creation parameters for the animgraph node, which makes the 
+            model twitch according to where it got hit. 
+            
+            The parameters set are
+            
+            	bool hit
+            	int hit_bone
+            	vector hit_offset
+            	vector hit_direction
+            	vector hit_strength
+            	
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityExtensions.CopyBonesFrom(Sandbox.Entity,Sandbox.Entity)">
+            <summary>
+            Copy the bones from the target entity, but at the current entity's position and rotation
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityExtensions.CopyBonesFrom(Sandbox.Entity,Sandbox.Entity,Vector3,Rotation,System.Single)">
+            <summary>
+            Copy the bones from the target entity, but at this position and rotation instead of the target entity's
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityExtensions.SetRagdollVelocityFrom(Sandbox.Entity,Sandbox.Entity,System.Single,System.Single,System.Single)">
+            <summary>
+            Set the velocity of the ragdoll entity by working out the bone positions of from delta seconds ago 
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelExtensions">
+            <summary>
+            Extensions for Model
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModelExtensions.GetBreakPieces(Sandbox.Model)">
+            <summary>
+            Get a list of break pieces for this model. These are stored in the "break_list" data key.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModelExtensions.GetPropData(Sandbox.Model)">
+            <summary>
+            Get prop data for this model. This is stored in the "prop_data" data key.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModelExtensions.HasPropData(Sandbox.Model)">
+            <summary>
+            Check if prop data exists for this model. This is stored in the "prop_data" data key.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModelExtensions.HasExplosionBehavior(Sandbox.Model)">
+            <summary>
+            Check if explosion behavior exists for this model. This is stored in the "explosion_behavior" data key.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModelExtensions.GetExplosionBehavior(Sandbox.Model)">
+            <summary>
+            Get explosion behavior for this model. This is stored in the "explosion_behavior" data key.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModelExtensions.GetParticles(Sandbox.Model)">
+            <summary>
+            Get a list of particles for this model. These are stored in the "particles_list" data key.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelParticle">
+            <summary>
+            Spawn a particle when the model is used on an entity. Support for this depends on the entity.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelBreakPiece">
+            <summary>
+            Defines a single breakable prop gib.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelPropData">
+            <summary>
+            Generic prop settings. Support for this depends on the entity.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.AllowStatic">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.BakeLighting">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.SpawnMotionDisabled">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.Health">
+            <summary>
+            When this model is used as prop_physics, it's health will be set to this value.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.MinImpactDamageSpeed">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.ImpactDamage">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.ParentBodygroupName">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelPropData.ParentBodygroupValue">
+            <summary>
+            TODO: Implement/Delete
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelExplosionBehavior">
+            <summary>
+            Defines the model as explosive. Support for this depends on the entity.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelExplosionBehavior.Sound">
+            <summary>
+            Sound override for when the prop explodes.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelExplosionBehavior.Effect">
+            <summary>
+            Particle effect override for when the problem explodes.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelExplosionBehavior.Damage">
+            <summary>
+            Amount of damage to do at the center on the explosion. It will falloff over distance.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelExplosionBehavior.Radius">
+            <summary>
+            Range of explosion's damage.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelExplosionBehavior.Force">
+            <summary>
+            Scale of the force applied to entities damaged by the explosion and the models break pieces.
+            </summary>
+        </member>
+        <member name="T:Sandbox.SurfaceExtension">
+            <summary>
+            Extensions for Surfaces
+            </summary>
+        </member>
+        <member name="M:Sandbox.SurfaceExtension.DoBulletImpact(Sandbox.Surface,Sandbox.TraceResult)">
+            <summary>
+            Create a particle effect and play an impact sound for this surface being hit by a bullet
+            </summary>
+        </member>
+        <member name="M:Sandbox.SurfaceExtension.DoFootstep(Sandbox.Surface,Sandbox.Entity,Sandbox.TraceResult,System.Int32,System.Single)">
+            <summary>
+            Create a footstep effect
+            </summary>
+        </member>
+        <member name="T:Sandbox.VertexBufferExtenison">
+            <summary>
+            Extensions for Surfaces
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.Add(Sandbox.VertexBuffer,Vector3)">
+            <summary>
+            Add a vertex using this postion and everything else from Default
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.Add(Sandbox.VertexBuffer,Vector3,Vector2)">
+            <summary>
+            Add a vertex using this postion and uv, and everything else from Default
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.AddTriangle(Sandbox.VertexBuffer,Sandbox.Vertex,Sandbox.Vertex,Sandbox.Vertex)">
+            <summary>
+            Add a triangle to the vertex buffer. Will include indices if they're enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.AddQuad(Sandbox.VertexBuffer,Rect)">
+            <summary>
+            Add a quad to the vertex buffer. Will include indices if they're enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.AddQuad(Sandbox.VertexBuffer,Sandbox.Vertex,Sandbox.Vertex,Sandbox.Vertex,Sandbox.Vertex)">
+            <summary>
+            Add a quad to the vertex buffer. Will include indices if they're enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.AddQuad(Sandbox.VertexBuffer,Vector3,Vector3,Vector3,Vector3)">
+            <summary>
+            Add a quad to the vertex buffer. Will include indices if they're enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.AddQuad(Sandbox.VertexBuffer,Ray,Vector3,Vector3)">
+            <summary>
+            Add a quad to the vertex buffer. Will include indices if they're enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.VertexBufferExtenison.AddCube(Sandbox.VertexBuffer,Vector3,Vector3,Rotation,Color32)">
+            <summary>
+            Add a cube to the vertex buffer. Will include indices if they're enabled.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Game">
+            <summary>
+            This is the main base game
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.Shutdown">
+            <summary>
+            Called when the game is shutting down
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.ClientJoined(Sandbox.Client)">
+            <summary>
+            Client has joined the server. Create their puppets.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.ClientDisconnect(Sandbox.Client,Sandbox.NetworkDisconnectionReason)">
+            <summary>
+            Client has disconnected from the server. Remove their entities etc.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.Simulate(Sandbox.Client)">
+            <summary>
+            Called each tick.
+            Serverside: Called for each client every tick
+            Clientside: Called for each tick for local client. Can be called multiple times per tick.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.FrameSimulate(Sandbox.Client)">
+            <summary>
+            Called each frame on the client only to simulate things that need to be updated every frame. An example
+            of this would be updating their local pawn's look rotation so it updates smoothly instead of at tick rate.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.CanHearPlayerVoice(Sandbox.Client,Sandbox.Client)">
+            <summary>
+            Should we send voice data to this player
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.FindActiveCamera">
+            <summary>
+            Which camera should we be rendering from?
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.DoPlayerSuicide(Sandbox.Client)">
+            <summary>
+            Player typed kill in the console. Override if you don't want players
+            to be allowed to kill themselves.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.DoPlayerNoclip(Sandbox.Client)">
+            <summary>
+            Player typed noclip in the console.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.DoPlayerDevCam(Sandbox.Client)">
+            <summary>
+            The player wants to enable the devcam. Probably shouldn't allow this
+            unless you're in a sandbox mode or they're a dev.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.BuildCamera(Sandbox.CameraSetup)">
+            <summary>
+            Called to set the camera up, clientside only.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.BuildInput(Sandbox.InputBuilder)">
+            <summary>
+            Clientside only. Called every frame to process the input.
+            The results of this input are encoded\ into a user command and
+            passed to the PlayerController both clientside and serverside.
+            This routine is mainly responsible for taking input from mouse/controller
+            and building look angles and move direction.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.PostCameraSetup(Sandbox.CameraSetup@)">
+            <summary>
+            Called after the camera setup logic has run. Allow the gamemode to 
+            do stuff to the camera, or using the camera. Such as positioning entities 
+            relative to it, like viewmodels etc.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.PostLevelLoaded">
+            <summary>
+            Called right after the level is loaded and all entities are spawned.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.OnVoicePlayed(System.Int64,System.Single)">
+            <summary>
+            Someone is speaking via voice chat. This might be someone in your game, 
+            or in your party, or in your lobby.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.MoveToSpawnpoint(Sandbox.Entity)">
+            <summary>
+            This entity is probably a pawn, and would like to be placed on a spawnpoint.
+            If you were making a team based game you'd want to choose the spawn based on team.
+            Or not even call this. Up to you. Added as a convenience.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.OnKilled(Sandbox.Entity)">
+            <summary>
+            An entity has been killed. This is usually a pawn but anything can call it.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.OnKilled(Sandbox.Client,Sandbox.Entity)">
+            <summary>
+            An entity, which is a pawn, and has a client, has been killed.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.OnKilledMessage(System.Int64,System.String,System.Int64,System.String,System.String)">
+            <summary>
+            Called clientside from OnKilled on the server to add kill messages to the killfeed. 
+            </summary>
+        </member>
+        <member name="T:Sandbox.MoveHelper">
+            <summary>
+            This is the HL2 style movement. If moving from position using Velocity results
+            in a collision velocity will be changed to slide across the surface where 
+            appropriate. Position will be updated to the optimal position.
+            
+             This is coded to be simple on purpose. It's enough to get your started. Once you
+             reach the point where it's lacking you should copy and paste it into your project
+             and specialize to your needs.
+            
+            Give it a position and velocity, set the Trace up how you want to 
+            use it, then you're good to go.
+            
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.#ctor(Vector3,Vector3)">
+            <summary>
+            Create the movehelper and initialize it with the default settings. 
+            You can change Trace and MaxStandableAngle after creation.
+            </summary>
+            <example>
+            var move = new MoveHelper( Position, Velocity )
+            </example>
+        </member>
+        <member name="M:Sandbox.MoveHelper.TraceFromTo(Vector3,Vector3)">
+            <summary>
+            Trace this from one position to another
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.TraceDirection(Vector3)">
+            <summary>
+            Trace this from its current Position to a delta
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.TryMove(System.Single)">
+            <summary>
+            Try to move to the position. Will return the fraction of the desired velocity that we travelled.
+            Position and Velocity will be what we recommend using.
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.IsFloor(Sandbox.TraceResult)">
+            <summary>
+            Return true if this is the trace is a floor. Checks hit and normal angle.
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.ApplyFriction(System.Single,System.Single)">
+            <summary>
+            Apply an amount of friction to the velocity
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.TraceMove(Vector3)">
+            <summary>
+            Move our position by this delta using trace. If we hit something we'll stop, 
+            we won't slide across it nicely like TryMove does.
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.TryMoveWithStep(System.Single,System.Single)">
+            <summary>
+            Like TryMove but will also try to step up if it hits a wall
+            </summary>
+        </member>
+        <member name="M:Sandbox.MoveHelper.TryUnstuck">
+            <summary>
+            Test whether we're stuck, and if we are then unstuck us
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.MoveHelper.Unstuck">
+            <summary>
+            We're inside something solid, lets try to get out of it.
+            </summary>
+        </member>
+        <member name="T:Sandbox.VelocityClipPlanes">
+            <summary>
+            Used to store a list of planes that an object is going to hit, and then
+            remove velocity from them so the object can slide over the surface without
+            going through any of the planes.
+            </summary>
+        </member>
+        <member name="P:Sandbox.VelocityClipPlanes.Max">
+            <summary>
+            Maximum number of plasnes that can be hit
+            </summary>
+        </member>
+        <member name="P:Sandbox.VelocityClipPlanes.Count">
+            <summary>
+            Number of planes we're currently holding
+            </summary>
+        </member>
+        <member name="M:Sandbox.VelocityClipPlanes.TryAdd(Vector3,Vector3@,System.Single)">
+            <summary>
+            Try to add this plane and restrain velocity to it (and its brothers)
+            </summary>
+            <returns>False if we ran out of room and should stop adding planes</returns>
+        </member>
+        <member name="M:Sandbox.VelocityClipPlanes.TryClip(Vector3@)">
+            <summary>
+            Try to clip our velocity to all the planes, so we're not travelling into them
+            Returns true if we clipped properly
+            </summary>
+        </member>
+        <member name="M:Sandbox.VelocityClipPlanes.MovingTowardsAnyPlane(Vector3,System.Int32)">
+            <summary>
+            Returns true if we're moving towards any of our planes (except for skip)
+            </summary>
+        </member>
+        <member name="M:Sandbox.VelocityClipPlanes.StartBump(Vector3)">
+            <summary>
+            Start a new bump. Clears planes and resets BumpVelocity
+            </summary>
+        </member>
+        <member name="M:Sandbox.VelocityClipPlanes.ClipVelocity(Vector3,Vector3,System.Single)">
+            <summary>
+            Clip the velocity to the normal
+            </summary>
+        </member>
+        <member name="F:Sandbox.BasePlayerController.TraceOffset">
+            <summary>
+            Any bbox traces we do will be offset by this amount.
+            todo: this needs to be predicted
+            </summary>
+        </member>
+        <member name="M:Sandbox.BasePlayerController.TraceBBox(Vector3,Vector3,Vector3,Vector3,System.Single)">
+            <summary>
+            Traces the bbox and returns the trace result.
+            LiftFeet will move the start position up by this amount, while keeping the top of the bbox at the same 
+            position. This is good when tracing down because you won't be tracing through the ceiling above.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BasePlayerController.TraceBBox(Vector3,Vector3,System.Single)">
+            <summary>
+            This calls TraceBBox with the right sized bbox. You should derive this in your controller if you 
+            want to use the built in functions
+            </summary>
+        </member>
+        <member name="M:Sandbox.BasePlayerController.GetHull">
+            <summary>
+            This is temporary, get the hull size for the player's collision
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.GetHull">
+            <summary>
+            This is temporary, get the hull size for the player's collision
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.UpdateBBox">
+            <summary>
+            Update the size of the bbox. We should really trigger some shit if this changes.
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.Accelerate(Vector3,System.Single,System.Single,System.Single)">
+            <summary>
+            Add our wish direction and speed onto our velocity
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.ApplyFriction(System.Single)">
+            <summary>
+            Remove ground friction from velocity
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.UpdateGroundEntity(Sandbox.TraceResult)">
+            <summary>
+            We have a new ground entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.ClearGroundEntity">
+            <summary>
+            We're no longer on the ground, remove it
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.TraceBBox(Vector3,Vector3,System.Single)">
+            <summary>
+            Traces the current bbox and returns the result.
+            liftFeet will move the start position up by this amount, while keeping the top of the bbox at the same
+            position. This is good when tracing down because you won't be tracing through the ceiling above.
+            </summary>
+        </member>
+        <member name="M:Sandbox.WalkController.StayOnGround">
+            <summary>
+            Try to keep a walking player on the ground when running down slopes etc
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Button.SetText(System.String)">
+            <summary>
+            Calls Text = value
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Checkbox.CheckMark">
+            <summary>
+            The checkmark icon. Although no guarentees it's an icon!
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Checkbox.Checked">
+            <summary>
+            Returns true if this checkbox is checked
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.DropDown">
+            <summary>
+            A UI control which provides multiple options via a dropdown box
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.DropDown.Options">
+            <summary>
+            The options to show on click. You can edit these directly via this property.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.DropDown.Value">
+            <summary>
+            The current string value. This is useful to have if Selected is null.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.DropDown.Selected">
+            <summary>
+            The currently selected option
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.DropDown.PopulateOptionsFromType(System.Type)">
+            <summary>
+            Given the type, populate options. This is useful if you're an enum type.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.DropDown.Open">
+            <summary>
+            Open the dropdown
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.DropDown.Select(Sandbox.UI.Option,System.Boolean)">
+            <summary>
+            Select an option
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.DropDown.Select(System.String,System.Boolean)">
+            <summary>
+            Select an option by value string
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.DropDown.OnTemplateElement(Sandbox.Html.INode)">
+            <summary>
+            Give support for option elements in html template
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.Field">
+            <summary>
+            A field in a form, usually contains a label and a control
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.FieldControl">
+            <summary>
+            A field in a form, usually contains a label and a control
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.IInputControl">
+            <summary>
+            TextArea etc
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Label.SetText(System.String)">
+            <summary>
+            Calls Text = value
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Label.Selectable">
+            <summary>
+            If false then this label won't be selected, even if the parent has TextSelection enabled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.GridLayout.ItemWidth">
+            <summary>
+            The fixed size of each item. If x is lower than 0 then we'll stretch to fill the size.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.GridLayout.AutoColumns">
+            <summary>
+            Should we update Columns automatically?
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.GridLayout.Columns">
+            <summary>
+            How many columns should we have?
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.GridLayout.Rect">
+            <summary>
+            The Rect of this layout. Set via Update.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.GridLayout.ScrollOffset">
+            <summary>
+            Where the top of the visible space is
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.GridLayout.Justify">
+            <summary>
+            How columns should be justified
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.GridLayout.Update(Sandbox.UI.Box,System.Single,System.Single,Sandbox.UI.Justify)">
+            <summary>
+            Update specifics of this layout. Returns true if we're dirty.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.GridLayout.GetVisibleRange(System.Int32@,System.Int32@)">
+            <summary>
+            Get the range of cells that are visible
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.GridLayout.GetPosition(System.Int32)">
+            <summary>
+            Get the position of this cell
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.GridLayout.Position(System.Int32,Sandbox.UI.Panel)">
+            <summary>
+            Move this panel into the position. This will set the Left/Top/Width/Height on the panel
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.GridLayout.GetHeight(System.Int32)">
+            <summary>
+            Get the full height if we have this many items
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.Tests.VirtualScrollPanel">
+            <summary>
+            Scroll panel that creates its contents as they become visible
+            
+            TODO: we need to let panels know, or recreate them, when Data changes
+            
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.VirtualScrollPanel.HasData(System.Int32)">
+            <summary>
+            Return true if we have this data slot
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.Tests.VirtualScrollPanel.OnCreateCell">
+            <summary>
+            Create a new panel. You should add a child to the passed panel (which is the cell).
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Tests.BaseVirtualScrollPanel`1.HasData(System.Int32)">
+            <summary>
+            Return true if we have this data slot
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Popup.Success">
+            <summary>
+            Closes all panels, marks this one as a success and closes it.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.Popup.Failure">
+            <summary>
+            Closes all panels, marks this one as a failure and closes it.
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.PopupButton">
+            <summary>
+            A button that opens a popup panel.
+            Useless on its own - you need to implement Open
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.SplitContainer">
+            <summary>
+            A control that has two panes with a splitter in between. You can drag the splitter to change the size of the two panels.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.SplitContainer.Left">
+            <summary>
+            The left, or top panel. Has class "split-left".
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.SplitContainer.Right">
+            <summary>
+            The left, or bottom panel. Has class "split-right".
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.SplitContainer.Splitter">
+            <summary>
+            The splitter control
+            </summary>
+        </member>
+        <member name="F:Sandbox.UI.SplitContainer.MinimumFractionLeft">
+            <summary>
+            The smallest the left section can be as a fraction (0-1). Also controls the largest the right section can be.
+            </summary>
+        </member>
+        <member name="F:Sandbox.UI.SplitContainer.MinimumFractionRight">
+            <summary>
+            The smallest the right section can be as a fraction (0-1). Also controls the largest the left section can be.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.SplitContainer.IsDragging">
+            <summary>
+            Returns true if splitter is being dragged
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.SplitContainer.Vertical">
+            <summary>
+            Should this be laid out vertically? If you set this to vertical you should
+            mentally change Left to Top and Right to Bottom.
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.SplitContainer.FractionCookie">
+            <summary>
+            We can save the position of this splitter in a cookie. To do that set this
+            (or "cookie" in a template). We'll automatically save and restore from the cookie.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.SplitContainer.StartDragging(Sandbox.UI.PanelEvent)">
+            <summary>
+            The splitter has been pressed
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.SplitContainer.StopDragging(Sandbox.UI.PanelEvent)">
+            <summary>
+            The splitter has been released
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.SplitContainer.OnMouseMove(Sandbox.UI.MousePanelEvent)">
+            <summary>
+            If we're dragging then position the split where the mouse is.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.SplitContainer.UpdateSplitFraction(System.Single)">
+            <summary>
+            Sets the split fraction to this value. Will automatically adjust the value
+            according to MinimumFraction parameters, and will save the new value to cookie.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.SplitContainer.OnTemplateSlot(Sandbox.Html.INode,System.String,Sandbox.UI.Panel)">
+            <summary>
+            You can create child panels in the template by setting attributes
+            on them, like slot="left" to make that panel appear in the left panel.
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.TabContainer">
+            <summary>
+            A container with tabs, allowing you to switch between different sheets.
+            
+            You can position the tabs by adding the class tabs-bottom, tabs-left, tabs-right (default is tabs top)
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TabContainer.TabsContainer">
+            <summary>
+            A control housing the tabs
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TabContainer.SheetContainer">
+            <summary>
+            A control housing the sheets
+            </summary>
+        </member>
+        <member name="F:Sandbox.UI.TabContainer.Tabs">
+            <summary>
+            Access to the pages on this control
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TabContainer.TabCookie">
+            <summary>
+            If a cookie is set then the selected tab will be saved and restored.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.TabContainer.AddTab(Sandbox.UI.Panel,System.String,System.String)">
+            <summary>
+            Add a tab to the sheet
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.TabContainer.SwitchTab(Sandbox.UI.TabContainer.Tab,System.Boolean)">
+            <summary>
+            Switch to a specific tab
+            </summary>
+        </member>
+        <member name="T:Sandbox.UI.TabContainer.Tab">
+            <summary>
+            Holds a Tab button and a Page for each sheet on the TabControl
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TabContainer.Tab.Active">
+            <summary>
+            Change appearance based on active status
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.AutoComplete">
+            <summary>
+            If you hook a method up here we'll do autocomplete on it
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.AcceptsImeInput">
+            <summary>
+            Allow IME input when this is focused
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.MinValue">
+            <summary>
+            If we're numeric, this is the lowest numeric value allowed
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.MaxValue">
+            <summary>
+            If we're numeric, this is the highest numeric value allowed
+            </summary>
+        </member>
+        <member name="F:Sandbox.UI.TextEntry.TimeSinceNotInFocus">
+            <summary>
+            Keep tabs of when we were focused so we can flash the caret rative to that time.
+            We want the caret to be visible immediately on focus
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.CharacterRegex">
+            <summary>
+            If set, will block the input of any character that doesn't match
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.StringRegex">
+            <summary>
+            If set, HasValidationErrors will return true if doesn't match regex
+            </summary>
+        </member>
+        <member name="P:Sandbox.UI.TextEntry.HasValidationErrors">
+            <summary>
+            If true then this control has validation errors and the input shouldn't be accepted
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.TextEntry.UpdateValidation">
+            <summary>
+            Update the validation state of this control.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.WorldPanel.UpdateBounds(Rect)">
+            <summary>
+            Update the bounds for this panel. We purposely do nothing here because
+            on world panels you can change the bounds by setting PanelBounds.
+            </summary>
+        </member>
+        <member name="M:Sandbox.UI.WorldPanel.UpdateScale(Rect)">
+            <summary>
+            We override this to prevent the scale automatically being set based on screen
+            size changing.. because that's obviously not needed here.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.CanAdd(Sandbox.Entity)">
+            <summary>
+            Return true if this item belongs in the inventory
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.DeleteContents">
+            <summary>
+            Delete every entity we're carrying. Useful to call on death.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.GetSlot(System.Int32)">
+            <summary>
+            Get the item in this slot
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.Count">
+            <summary>
+            Returns the number of items in the inventory
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.GetActiveSlot">
+            <summary>
+            Returns the index of the currently active child
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.Pickup(Sandbox.Entity)">
+            <summary>
+            Try to pick this entity up
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.OnChildAdded(Sandbox.Entity)">
+            <summary>
+            A child has been added to the Owner (player). Do we want this
+            entity in our inventory? Yeah? Add it then.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.OnChildRemoved(Sandbox.Entity)">
+            <summary>
+            A child has been removed from our Owner. This might not even
+            be in our inventory, if it is then we'll remove it from our list
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.SetActiveSlot(System.Int32,System.Boolean)">
+            <summary>
+            Set our active entity to the entity on this slot
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.SwitchActiveSlot(System.Int32,System.Boolean)">
+            <summary>
+            Switch to the slot next to the slot we have active.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.DropActive">
+            <summary>
+            Drop the active entity. If we can't drop it, will return null
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.Drop(Sandbox.Entity)">
+            <summary>
+            Drop this entity. Will return true if successfully dropped.
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.Contains(Sandbox.Entity)">
+            <summary>
+            Returns true if this inventory contains this entity
+            </summary>
+        </member>
+        <member name="P:Sandbox.BaseInventory.Active">
+            <summary>
+            Returns the active entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.SetActive(Sandbox.Entity)">
+            <summary>
+            Make this entity the active one
+            </summary>
+        </member>
+        <member name="M:Sandbox.BaseInventory.Add(Sandbox.Entity,System.Boolean)">
+            <summary>
+            Try to add this entity to the inventory. Will return true
+            if the entity was added successfully. 
+            </summary>
+        </member>
+        <member name="T:Sandbox.Breakables">
+            <summary>
+            Handle breaking a prop into bits
+            </summary>
+        </member>
+        <member name="F:Sandbox.Breakables.Result.Source">
+            <summary>
+            The entity that is breaking.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Breakables.Result.Params">
+            <summary>
+            Various break piece related parameters
+            </summary>
+        </member>
+        <member name="F:Sandbox.Breakables.Result.Props">
+            <summary>
+            List of gibs generated. Amount of gibs may not match model's break piece count depending on value of <see cref="P:Sandbox.Breakables.MaxGibs"/>.
+            </summary>
+        </member>
+        <member name="T:Sandbox.IModelBreakCommand">
+            <summary>
+            A model break command, defined in ModelDoc and ran after spawning model gibs. The inheriting class must have a LibraryAttribute.
+            </summary>
+        </member>
+        <member name="M:Sandbox.IModelBreakCommand.OnBreak(Sandbox.Breakables.Result)">
+            <summary>
+            This will be called after an entity with this model breaks via <see cref="T:Sandbox.Breakables">Breakables</see> class.
+            </summary>
+            <param name="result">This class contains the break event data, including the source entity and the list of gibs.</param>
+        </member>
+        <member name="T:Sandbox.ModelBreakParticle">
+            <summary>
+            Spawn a particle system when this model breaks.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.Particle">
+            <summary>
+            The particle to spawn when the model breaks.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.Model">
+            <summary>
+            (Optional) Set the particle control point #0 to the specified model.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.Snapshot">
+            <summary>
+            (Optional) Set the particle control point #0 to the specified snapshot.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.DamagePositionCP">
+            <summary>
+            (Optional) Set this control point to the position of the break damage.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.DamageDirectionCP">
+            <summary>
+            (Optional) Set this control point to the direction of the break damage.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.VelocityCP">
+            <summary>
+            (Optional) Set this control point to the velocity of the original prop.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.AngularVelocityCP">
+            <summary>
+            (Optional) Set this control point to the angular velocity of the original prop.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.LocalGravityCP">
+            <summary>
+            (Optional) Set this control point to global world gravity at the moment the model broke.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakParticle.TintCP">
+            <summary>
+            (Optional) Set this control point to the tint color of the original prop as a vector with values 0 to 1.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModelBreakPieceRevoluteJoint">
+            <summary>
+            Creates a revolute (hinge) joint between two spawned breakpieces.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakPieceRevoluteJoint.Angles">
+            <summary>
+            Axis around which the revolute/hinge joint rotates.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakPieceRevoluteJoint.Friction">
+            <summary>
+            Hinge friction.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModelBreakPieceRevoluteJoint.LimitAngles">
+            <summary>
+            Whether the angle limit should be enabled or not.
+            </summary>
+        </member>
+        <member name="T:Sandbox.CitizenAnimationHelper">
+            <summary>
+            A struct to help you set up your citizen based animations
+            </summary>
+        </member>
+        <member name="M:Sandbox.CitizenAnimationHelper.WithLookAt(Vector3,System.Single,System.Single,System.Single)">
+            <summary>
+            Have the player look at this point in the world
+            </summary>
+        </member>
+        <member name="M:Sandbox.Decals.Place(Sandbox.Material,Sandbox.Entity,System.Int32,Vector3,Vector3,Rotation)">
+            <summary>
+            Place a decal on an entity
+            </summary>
+        </member>
+        <member name="M:Sandbox.Decals.Place(Sandbox.Material,Vector3,Vector3,Rotation)">
+            <summary>
+            Place a decal on the world
+            </summary>
+        </member>
+        <member name="T:Sandbox.EntityLimit">
+            <summary>
+            A class that limits the amount of entities.
+            </summary>
+        </member>
+        <member name="P:Sandbox.EntityLimit.MaxTotal">
+            <summary>
+            Maximum entities in this list before we start deleting
+            </summary>
+        </member>
+        <member name="P:Sandbox.EntityLimit.List">
+            <summary>
+            List of entities currently in this shit
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityLimit.Watch(Sandbox.ModelEntity)">
+            <summary>
+            Watch an entity, contribute to the count and delete when its their turn
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityLimit.Maintain">
+            <summary>
+            Maintain the list, delete entities if they need deleting
+            </summary>
+        </member>
+        <member name="M:Sandbox.EntityLimit.Retire(Sandbox.Entity)">
+            <summary>
+            Delete this entity and remove it from the list
+            </summary>
+        </member>
+    </members>
+</doc>
