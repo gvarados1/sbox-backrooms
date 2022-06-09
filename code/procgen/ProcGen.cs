@@ -277,14 +277,24 @@ partial class ProcGenManager : Entity
 						walls++;
 					}
 
-					// todo: move this prop placement elsewhere
+					// todo: move this prop placement elsewhere and make it better
 					if(walls > 1)
 					{
 						if ( Rand.Int( 3 ) == 1 )
 						{
 							var prop = new Prop();
-							prop.SetModel( "models/citizen_props/crate01.vmdl" );
-							prop.Position = new Vector3( (float)xx * TileSize, (float)yy * TileSize, 0f );
+							prop.SetModel( "models/sbox_props/wooden_crate/wooden_crate.vmdl" );
+							prop.Position = new Vector3( (float)xx * TileSize, (float)yy * TileSize, 5f );
+							prop.Rotation = Rotation.Random;
+							prop.Velocity = Vector3.Random * 1000 * Rand.Float( 5 );
+						}
+						else if ( Rand.Int( 15 ) == 1 )
+						{
+							var prop = new Prop();
+							prop.SetModel( "models/sbox_props/office_chair/office_chair.vmdl" );
+							prop.Position = new Vector3( (float)xx * TileSize, (float)yy * TileSize, 30f );
+							prop.Rotation = Rotation.Random;
+							prop.Velocity = Vector3.Random * 1000 * Rand.Float( 4 );
 						}
 					}
 
@@ -367,7 +377,7 @@ partial class ProcGenManager : Entity
 		Log.Info( "Grid Reset!" );
 	}
 
-	[ServerCmd( "proc_generate" )]
+	[ConCmd.Server( "proc_generate" )]
 	public static void Generate()
 	{
 		foreach ( var generator in Entity.All.OfType<ProcGenManager>().ToArray() )
@@ -376,7 +386,7 @@ partial class ProcGenManager : Entity
 		}
 	}
 
-	[ServerCmd( "proc_clear" )]
+	[ConCmd.Server( "proc_clear" )]
 	public static void ClearWorld()
 	{
 		foreach( var model in Entity.All.OfType<ProcModel>().ToArray())

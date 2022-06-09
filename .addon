@@ -9,5 +9,17 @@
   "ResourcePaths": null,
   "HasCode": true,
   "CodePath": "code",
-  "RootNamespace": "ProcGen"
+  "RootNamespace": "ProcGen",
+  "Metadata": {
+    "MapList": [
+      "gvar.backrooms"
+    ],
+    "MinPlayers": 1,
+    "MaxPlayers": 32,
+    "MapSelect": 1,
+    "PerMapRanking": false,
+    "LeaderboardType": 0,
+    "RankType": 0,
+    "GameNetworkType": 0
+  }
 }

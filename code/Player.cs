@@ -7,7 +7,9 @@ partial class BackroomsPlayer : Player
 {
 	private DamageInfo lastDamage;
 
-	public Clothing.Container Clothing = new();
+	public ClothingContainer Clothing = new();
+
+	private AnimatedEntity fog_dome;
 
 	public BackroomsPlayer()
 	{
@@ -24,20 +26,8 @@ partial class BackroomsPlayer : Player
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
 
-		//
-		// Use WalkController for movement (you can make your own PlayerController for 100% control)
-		//
 		Controller = new SlowWalkController();
-		
-
-		//
-		// Use StandardPlayerAnimator  (you can make your own PlayerAnimator for 100% control)
-		//
 		Animator = new StandardPlayerAnimator();
-
-		//
-		// Use ThirdPersonCamera (you can make your own Camera for 100% control)
-		//
 		CameraMode = new FirstPersonCamera();
 
 		Clothing.DressEntity( this );
@@ -76,11 +66,26 @@ partial class BackroomsPlayer : Player
 	{
 		base.Simulate( cl );
 
+		SimulateAnimatorSounds();
+
 		//
 		// If you have active children (like a weapon etc) you should call this to 
 		// simulate those too.
 		//
 		SimulateActiveChild( cl, ActiveChild );
+	}
+
+	public override void FrameSimulate( Client cl )
+	{
+		// dome to hard-cap the fog. Is this a hack?
+		if ( fog_dome == null )
+		{
+			fog_dome = new AnimatedEntity();
+			fog_dome.SetModel( "models/backrooms/game/fog_dome.vmdl" );
+			fog_dome.Owner = Owner;
+		}
+		fog_dome.Position = CameraMode.Position;
+		base.FrameSimulate( cl );
 	}
 
 	public override void OnKilled()
@@ -110,4 +115,96 @@ partial class BackroomsPlayer : Player
 	{
 	}
 
+	TimeSince timeSinceLastFootstep = 0;
+
+	public override float FootstepVolume() => Velocity.WithZ( 0 ).Length.LerpInverse( 0.0f, 260f );
+	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
+	{
+		if ( LifeState != LifeState.Alive )
+			return;
+
+		if ( !IsServer )
+			return;
+
+		if ( timeSinceLastFootstep < 0.2f )
+			return;
+
+		volume *= FootstepVolume();
+
+		timeSinceLastFootstep = 0;
+
+		var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
+			.Radius( 1 )
+			.Ignore( this )
+			.Run();
+
+		if ( !tr.Hit ) return;
+
+		tr.Surface.DoFootstep( this, tr, foot, volume * 10 );
+	}
+
+	private TimeSince TimeSinceGroundedSound = 0f;
+	private void SimulateAnimatorSounds()
+	{
+		if ( !IsClient ) return;
+
+		using var _ = Prediction.Off();
+
+		if ( Animator.HasEvent( "jump" ) && TimeSinceGroundedSound > .2f )
+		{
+			Sound.FromEntity( "footstep-concrete", this );
+		}
+
+		if ( Animator.HasEvent( "grounded" ) )
+		{
+			Sound.FromEntity( "footstep-concrete-land", this );
+			TimeSinceGroundedSound = 0f;
+		}
+	}
+
+	public override void PostCameraSetup( ref CameraSetup setup )
+	{
+		base.PostCameraSetup( ref setup );
+
+		if ( setup.Viewer != null )
+		{
+			AddCameraEffects( ref setup );
+		}
+	}
+
+	// walkbob
+	float walkBob = 0;
+	float lean = 0;
+	float fov = 0;
+
+	private void AddCameraEffects( ref CameraSetup setup )
+	{
+		var speed = Velocity.Length.LerpInverse( 0, 320 );
+		var forwardspeed = Velocity.Normal.Dot( setup.Rotation.Forward );
+
+		var left = setup.Rotation.Left;
+		var up = setup.Rotation.Up;
+
+		if ( GroundEntity != null )
+		{
+			walkBob += Time.Delta * 25.0f * speed;
+		}
+
+		setup.Position += up * MathF.Sin( walkBob ) * speed * 2;
+		setup.Position += left * MathF.Sin( walkBob * 0.6f ) * speed * 1;
+
+		// Camera lean
+		lean = lean.LerpTo( Velocity.Dot( setup.Rotation.Right ) * 0.01f, Time.Delta * 15.0f );
+
+		var appliedLean = lean;
+		appliedLean += MathF.Sin( walkBob ) * speed * 0.3f;
+		setup.Rotation *= Rotation.From( 0, 0, appliedLean );
+
+		speed = (speed - 0.7f).Clamp( 0, 1 ) * 3.0f;
+
+		fov = fov.LerpTo( speed * 20 * MathF.Abs( forwardspeed ), Time.Delta * 4.0f );
+
+		setup.FieldOfView += fov;
+
+	}
 }

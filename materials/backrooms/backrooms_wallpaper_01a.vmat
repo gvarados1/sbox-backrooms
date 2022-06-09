@@ -2,12 +2,14 @@
 
 Layer0
 {
-	shader "simple.vfx"
+	shader "complex.vfx"
 
 	//---- PBR ----
-	F_AMBIENT_OCCLUSION_TEXTURE 1
+	F_SPECULAR 1
 
 	//---- Ambient Occlusion ----
+	g_flAmbientOcclusionDirectDiffuse "0.000"
+	g_flAmbientOcclusionDirectSpecular "0.000"
 	TextureAmbientOcclusion "materials/backrooms/backrooms_wallpaper_ao.jpg"
 
 	//---- Color ----

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ProcGen;
 
-partial class Ghost : AnimEntity
+partial class Ghost : AnimatedEntity
 {
 	public override void Spawn()
 	{
