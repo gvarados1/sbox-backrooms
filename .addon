@@ -16,10 +16,14 @@
     ],
     "MinPlayers": 1,
     "MaxPlayers": 32,
-    "MapSelect": 1,
+    "MapSelect": "Hidden",
     "PerMapRanking": false,
-    "LeaderboardType": 0,
-    "RankType": 0,
-    "GameNetworkType": 0
+    "LeaderboardType": "None",
+    "RankType": "None",
+    "GameNetworkType": "Multiplayer",
+    "ControlModes": {
+      "Keyboard": true,
+      "Gamepad": true
+    }
   }
 }
