@@ -21,6 +21,9 @@ partial class ProcGenManager : Entity
 	public static int GridY = 80;
 	public bool[,] Grid { get; set; }
 
+	public bool IsGenerating = false;
+	public float WallCount = 0;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -38,9 +41,16 @@ partial class ProcGenManager : Entity
 			TimeSinceReset = 0 - Rand.Int( 30 );
 			GenerateWorld();
 		}
+
+		if ( IsGenerating )
+		{
+			DebugOverlay.ScreenText( $"Generating World: {(int)(WallCount/41f)}%" );
+			DebugOverlay.ScreenText( $"Recent S&box updates makes this take forever. It used to be instant...", 1 );
+		}
 	}
 	public void GenerateWorld()
 	{
+		IsGenerating = true;
 		ClearWorld();
 		ResetGrid();
 		GenerateGrid();
@@ -217,10 +227,11 @@ partial class ProcGenManager : Entity
 		Log.Info( "Floor Populated!" );
 	}
 
-	public void PopulateWalls()
+	public async void PopulateWalls()
 	{
 		for ( int xx = 0; xx < GridX; xx++ )
 		{
+			await Task.Delay( 1 );
 			for ( int yy = 0; yy < GridY; yy++ )
 			{
 				if ( Grid[xx, yy] )
@@ -318,6 +329,10 @@ partial class ProcGenManager : Entity
 			}
 		}
 		Log.Info( "Walls Populated!" );
+
+		RespawnPlayers();
+		await Task.DelaySeconds( 5 );
+		IsGenerating = false;
 	}
 
 	public static readonly List<String> WallModels = new List<String>()
@@ -363,6 +378,7 @@ partial class ProcGenManager : Entity
 
 	public ProcModel CreateWall(int xx, int yy, int dir)
 	{
+		WallCount++;
 		var model = new ProcModel();
 		model.Position = new Vector3( (float)xx * TileSize, (float)yy * TileSize, 0f );
 		model.Rotation = new Angles( 0, dir, 0 ).ToRotation();
