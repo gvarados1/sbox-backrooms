@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Sandbox.UI;
 
 namespace ProcGen;
 
@@ -15,6 +16,7 @@ public struct ProcGrid
 
 partial class ProcGenManager : Entity
 {
+	public static ProcGenManager Current { get; set; }
 	public static int TileSize = 128;
 
 	public static int GridX = 50; // used to be 80x80
@@ -27,6 +29,7 @@ partial class ProcGenManager : Entity
 	public override void Spawn()
 	{
 		base.Spawn();
+		Current = this;
 
 		Grid = new bool[GridX, GridY];
 	}
