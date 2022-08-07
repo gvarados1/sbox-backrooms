@@ -17,7 +17,7 @@ partial class ProcGenManager : Entity
 {
 	public static int TileSize = 128;
 
-	public static int GridX = 50;
+	public static int GridX = 50; // used to be 80x80
 	public static int GridY = 60;
 	public bool[,] Grid { get; set; }
 
