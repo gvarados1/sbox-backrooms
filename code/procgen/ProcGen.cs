@@ -50,6 +50,7 @@ partial class ProcGenManager : Entity
 	}
 	public void GenerateWorld()
 	{
+		WallCount = 0;
 		IsGenerating = true;
 		ClearWorld();
 		ResetGrid();
