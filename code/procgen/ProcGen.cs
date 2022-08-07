@@ -47,7 +47,7 @@ partial class ProcGenManager : Entity
 
 		if ( IsGenerating )
 		{
-			DebugOverlay.ScreenText( $"Generating World: {(int)(WallCount/19f)}%" ); //41
+			DebugOverlay.ScreenText( $"Generating World: {(int)(WallCount/19.5f)}%" ); //41
 			DebugOverlay.ScreenText( $"Recent S&box updates makes this take forever. It used to be instant...", 1 );
 		}
 	}
