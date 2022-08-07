@@ -36,11 +36,11 @@ partial class ProcGenManager : Entity
 	[Event.Tick.Server]
 	public void Tick()
 	{
-		if(TimeSinceReset > 240 )
-		{
-			TimeSinceReset = 0 - Rand.Int( 30 );
-			GenerateWorld();
-		}
+		//if(TimeSinceReset > 240 )
+		//{
+		//	TimeSinceReset = 0 - Rand.Int( 30 );
+		//	GenerateWorld();
+		//}
 
 		if ( IsGenerating )
 		{
