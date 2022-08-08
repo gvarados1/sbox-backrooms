@@ -25,6 +25,11 @@
       "Keyboard": true,
       "Gamepad": true
     },
-    "GameCategory": "Horror"
+    "GameCategory": "Horror",
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;"
+    }
   }
 }
